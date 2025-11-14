@@ -7,9 +7,9 @@ const eBookSchema = new Schema(
       unique: true,
     },
     bookPrice: {
-      type: number,
+      type: Number,
     },
-    isbnNumber: {
+    isbNumber: {
       type: Number,
     },
     authorName: {
