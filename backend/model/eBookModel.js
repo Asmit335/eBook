@@ -18,6 +18,9 @@ const eBookSchema = new Schema(
     publishedAt: {
       type: String,
     },
+    publication: {
+      type: String,
+    },
   },
   {
     timestamps: true,

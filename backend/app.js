@@ -15,18 +15,55 @@ app.get("/", (req, res) => {
 });
 
 app.post("/book", async (req, res) => {
-  const { bookName, bookPrice, isbNumber, authorName, publishedAt } = req.body;
+  const {
+    bookName,
+    bookPrice,
+    isbNumber,
+    authorName,
+    publishedAt,
+    publication,
+  } = req.body;
   const bookData = await Ebook.create({
     bookPrice,
     bookName,
     isbNumber,
     authorName,
     publishedAt,
+    publication,
   });
-  res.status(200).json({
+  res.status(201).json({
     message: "Book created Successfully.",
     data: bookData,
   });
+});
+
+app.get("/book", async (req, res) => {
+  const bookData = await Ebook.find();
+  res.status(200).json({
+    message: "Book read Successfully.",
+    data: bookData,
+  });
+});
+
+app.get("/book/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const bookData = await Ebook.findById(id);
+    if (!bookData) {
+      res.status(404).json({
+        message: "Book not available.",
+      });
+    } else {
+      res.status(200).json({
+        message: "Single Book read Successfully.",
+        data: bookData,
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      message: "Something went Wrong.",
+    });
+  }
 });
 
 app.listen(3000, (req, res) => {
