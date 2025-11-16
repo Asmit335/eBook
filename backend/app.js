@@ -66,6 +66,45 @@ app.get("/book/:id", async (req, res) => {
   }
 });
 
+app.delete("/book/:id", async (req, res) => {
+  const { id } = req.params;
+  await Ebook.findByIdAndDelete(id);
+  res.status(200).json({
+    message: "Book Deleted Successfully.",
+  });
+});
+
+app.patch("/book/:id", async (req, res) => {
+  const { id } = req.params;
+  const {
+    bookName,
+    bookPrice,
+    isbNumber,
+    authorName,
+    publishedAt,
+    publication,
+  } = req.body;
+
+  const updateBook = await Ebook.findByIdAndUpdate(
+    id,
+    {
+      bookName,
+      bookPrice,
+      isbNumber,
+      authorName,
+      publishedAt,
+      publication,
+    },
+    { new: true }
+  );
+  if (!updateBook) {
+    return res.status(404).json({ message: "Book not found." });
+  }
+  res.status(200).json({
+    message: "Book updated Successfully.",
+  });
+});
+
 app.listen(3000, (req, res) => {
   console.log("Server is running in Port No. 3000");
 });
