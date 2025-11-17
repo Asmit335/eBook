@@ -10,11 +10,15 @@ app.use(express.urlencoded({ extended: true }));
 //databaseConnection
 connectToDB();
 
+//multer configuration
+const { multer, storage } = require("./middleware/multerConfig");
+const upload = multer({ storage });
+
 app.get("/", (req, res) => {
   res.status(200).json("Express is connected Successfully.");
 });
 
-app.post("/book", async (req, res) => {
+app.post("/book", upload.single("image"), async (req, res) => {
   const {
     bookName,
     bookPrice,
