@@ -2,6 +2,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const connectToDB = require("./database/mongdb");
 const Ebook = require("./model/eBookModel");
+const fs = require("fs");
 
 const app = express();
 app.use(express.json());
@@ -34,6 +35,7 @@ app.post("/book", upload.single("image"), async (req, res) => {
     authorName,
     publishedAt,
     publication,
+    imageUrl: "http://localhost:3000/" + req.file.filename,
   });
   res.status(201).json({
     message: "Book created Successfully.",
@@ -78,7 +80,7 @@ app.delete("/book/:id", async (req, res) => {
   });
 });
 
-app.patch("/book/:id", async (req, res) => {
+app.patch("/book/:id", upload.single("image"), async (req, res) => {
   const { id } = req.params;
   const {
     bookName,
@@ -89,6 +91,20 @@ app.patch("/book/:id", async (req, res) => {
     publication,
   } = req.body;
 
+  const oldDataImageFile = await Ebook.findById(id);
+  let fileName;
+  if (req.file) {
+    const oldImagePath = oldDataImageFile.imageUrl;
+    const localHostUrlLength = "http://localhost:3000".length;
+    const newImagePath = oldDataImageFile.slice(localHostUrlLength);
+    fs.unlink(`storage/${newImagePath}`, (err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("File Deleted Successfully.");
+      }
+    });
+  }
   const updateBook = await Ebook.findByIdAndUpdate(
     id,
     {
@@ -98,6 +114,7 @@ app.patch("/book/:id", async (req, res) => {
       authorName,
       publishedAt,
       publication,
+      imageUrl: "http://localhost:3000/" + req.file.filename,
     },
     { new: true }
   );
@@ -108,6 +125,8 @@ app.patch("/book/:id", async (req, res) => {
     message: "Book updated Successfully.",
   });
 });
+
+app.use(express.static("./storage"));
 
 app.listen(3000, (req, res) => {
   console.log("Server is running in Port No. 3000");
