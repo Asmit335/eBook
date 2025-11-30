@@ -3,9 +3,15 @@ const mongoose = require("mongoose");
 const connectToDB = require("./database/mongdb");
 const Ebook = require("./model/eBookModel");
 const fs = require("fs");
+const cors = require("cors");
 
 const app = express();
 app.use(express.json());
+app.use(
+  cors({
+    origin: "*",
+  })
+);
 app.use(express.urlencoded({ extended: true }));
 
 //databaseConnection
@@ -15,9 +21,9 @@ connectToDB();
 const { multer, storage } = require("./middleware/multerConfig");
 const upload = multer({ storage });
 
-app.get("/", (req, res) => {
-  res.status(200).json("Express is connected Successfully.");
-});
+// app.get("/", (req, res) => {
+//   res.status(200).json("Express is connected Successfully.");
+// });
 
 app.post("/book", upload.single("image"), async (req, res) => {
   const {
@@ -43,7 +49,7 @@ app.post("/book", upload.single("image"), async (req, res) => {
   });
 });
 
-app.get("/book", async (req, res) => {
+app.get("/", async (req, res) => {
   const bookData = await Ebook.find();
   res.status(200).json({
     message: "Book read Successfully.",
