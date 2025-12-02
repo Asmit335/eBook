@@ -3,6 +3,7 @@ import Card from '../components/Card'
 import axios from "axios"
 import { useState } from 'react'
 import { useEffect } from 'react'
+import Navbar from '../components/Navbar'
 const Home = () => {
   const [book, setBook] = useState([])
   const fetchBook=async()=>{
@@ -18,11 +19,12 @@ const Home = () => {
 
   return (
     <>
+    <Navbar/>
     <div className="flex flex-wrap justify-evenly mt-20">
    {
-    book.length>0 && book.map((index)=>{
+    book.length>0 && book.map((item,index)=>{
       return(
-        <Card />
+        <Card key={index} booksItems={item} />
       )
     })
    }

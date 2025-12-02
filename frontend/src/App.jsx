@@ -1,17 +1,17 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css'
-import Navbar from './pages/components/Navbar';
 import Home from './pages/home/Home';
+import SingleBook from './pages/singleBook/SingleBook';
 
 function App() {
 
   return (
     <>
     <BrowserRouter>  
-    <Navbar/> 
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/book/:id" element={<SingleBook />} />
       </Routes>
     </BrowserRouter>
     </>
