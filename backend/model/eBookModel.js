@@ -24,6 +24,10 @@ const eBookSchema = new Schema(
     imageUrl: {
       type: String,
     },
+    description: {
+      type: String,
+      default: "",
+    },
   },
   {
     timestamps: true,

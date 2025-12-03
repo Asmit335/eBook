@@ -25,7 +25,7 @@ const upload = multer({ storage });
 //   res.status(200).json("Express is connected Successfully.");
 // });
 
-app.post("/book", upload.single("image"), async (req, res) => {
+app.post("/addBook", upload.single("image"), async (req, res) => {
   const {
     bookName,
     bookPrice,
