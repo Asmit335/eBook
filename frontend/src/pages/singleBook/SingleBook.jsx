@@ -9,7 +9,7 @@ const SingleBook = () => {
   const [book, setBook] = useState(null);
 
   const fetchItem = async () => {
-    const response = await axios.get(`http://localhost:3000/book/${id}`);
+    const response = await axios.get(`https://ebook-kr5u.onrender.com/book/${id}`);
     if (response.status === 200) {
       setBook(response.data.data);
     }
@@ -29,7 +29,7 @@ const SingleBook = () => {
     const handleDelete=async()=>{
       const sure=window.confirm("Are you sure want to delete this book?")
       if(!sure) return;
-      const response=await axios.delete(`http://localhost:3000/book/${id}`)
+      const response=await axios.delete(`https://ebook-kr5u.onrender.com/book/${id}`)
       if(response.status===200){
         alert("Book Deleted Successfully.");
       }

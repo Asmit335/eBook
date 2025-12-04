@@ -26,7 +26,7 @@ const EditBook = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const res = await axios.get(`http://localhost:3000/book/${id}`);
+        const res = await axios.get(`https://ebook-kr5u.onrender.com/${id}`);
         const data = res.data.data;
 
         setFormData({
@@ -70,7 +70,7 @@ const EditBook = () => {
     for (const key in formData) data.append(key, formData[key]);
 
     try {
-      await axios.patch(`http://localhost:3000/book/${id}`, data, {
+      await axios.patch(`https://ebook-kr5u.onrender.com/book/${id}`, data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
 

@@ -7,7 +7,7 @@ import Navbar from '../components/Navbar'
 const Home = () => {
   const [book, setBook] = useState([])
   const fetchBook=async()=>{
-    const response=await axios.get("http://localhost:3000")
+    const response=await axios.get("https://ebook-kr5u.onrender.com")
     if(response.status===200){
       setBook(response.data.data)
     }

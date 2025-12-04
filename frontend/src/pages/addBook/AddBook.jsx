@@ -45,9 +45,8 @@ const AddBook = () => {
     for (const key in formData) {
       data.append(key, formData[key]);
     }
-
     try {
-      const response = await axios.post("http://localhost:3000/addbook", data, {
+      const response = await axios.post("https://ebook-kr5u.onrender.com/addbook", data, {
         headers: { "Content-Type": "multipart/form-data" },
       });
       console.log(response);
