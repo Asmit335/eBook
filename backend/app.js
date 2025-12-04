@@ -35,7 +35,10 @@ app.post("/addBook", upload.single("image"), async (req, res) => {
     authorName,
     publishedAt,
     publication,
+    description,
   } = req.body;
+
+  const backendUrl = process.env.BACKEND_URL || "http://localhost:3000";
   const bookData = await Ebook.create({
     bookPrice,
     bookName,
@@ -43,7 +46,7 @@ app.post("/addBook", upload.single("image"), async (req, res) => {
     authorName,
     publishedAt,
     publication,
-    imageUrl: "http://localhost:3000/" + req.file.filename,
+    imageUrl: `${backendUrl}/uploads/${req.file.filename}`,
   });
   res.status(201).json({
     message: "Book created Successfully.",
@@ -103,7 +106,8 @@ app.patch("/book/:id", upload.single("image"), async (req, res) => {
   let fileName;
   if (req.file) {
     const oldImagePath = oldDataImageFile.imageUrl;
-    const localHostUrlLength = "http://localhost:3000".length;
+
+    const localHostUrlLength = "https://ebook-kr5u.onrender.com/".length;
     const newImagePath = oldImagePath.slice(localHostUrlLength);
 
     fs.unlink(`storage/${newImagePath}`, (err) => {
@@ -123,7 +127,7 @@ app.patch("/book/:id", upload.single("image"), async (req, res) => {
       authorName,
       publishedAt,
       publication,
-      imageUrl: "http://localhost:3000/" + req.file.filename,
+      imageUrl: "https://ebook-kr5u.onrender.com/" + req.file.filename,
     },
     { new: true }
   );
