@@ -4,9 +4,11 @@ const connectToDB = require("./database/mongdb");
 const Ebook = require("./model/eBookModel");
 const fs = require("fs");
 const cors = require("cors");
-
+const env = require("dotenv");
 const app = express();
 app.use(express.json());
+env.config();
+
 app.use(
   cors({
     origin: "*",
@@ -134,7 +136,8 @@ app.patch("/book/:id", upload.single("image"), async (req, res) => {
 });
 
 app.use(express.static("./storage"));
+const PORT = process.env.PORT || 3000;
 
-app.listen(3000, (req, res) => {
+app.listen(PORT, (req, res) => {
   console.log("Server is running in Port No. 3000");
 });
