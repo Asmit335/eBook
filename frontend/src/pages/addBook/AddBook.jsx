@@ -32,7 +32,6 @@ const AddBook = () => {
     }
   };
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
 

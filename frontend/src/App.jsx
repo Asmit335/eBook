@@ -4,6 +4,7 @@ import './App.css'
 import Home from './pages/home/Home';
 import SingleBook from './pages/singleBook/SingleBook';
 import AddBook from './pages/addBook/AddBook';
+import EditBook from './pages/editBook/EditBook';
 
 function App() {
 
@@ -13,6 +14,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/book/:id" element={<SingleBook />} />
+        <Route path="/editbook/:id" element={<EditBook />} />
         <Route path="/addBook" element={<AddBook />} />
       </Routes>
     </BrowserRouter>

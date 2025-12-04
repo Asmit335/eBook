@@ -1,10 +1,11 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import Navbar from "../components/Navbar";
 
 const SingleBook = () => {
   const { id } = useParams();
+  const navigate=useNavigate()
   const [book, setBook] = useState(null);
 
   const fetchItem = async () => {
@@ -24,6 +25,16 @@ const SingleBook = () => {
         Loading...
       </div>
     );
+
+    const handleDelete=async()=>{
+      const sure=window.confirm("Are you sure want to delete this book?")
+      if(!sure) return;
+      const response=await axios.delete(`http://localhost:3000/book/${id}`)
+      if(response.status===200){
+        alert("Book Deleted Successfully.");
+      }
+      navigate("/")
+    }
 
   return (
     <>
@@ -85,6 +96,18 @@ const SingleBook = () => {
             {book.description ||
               "This is a wonderful book that offers knowledge, insights, and an amazing reading experience. Dive into the world of learning with this beautifully written piece."}
           </p>
+          
+      <div className="mt-8 flex gap-4">
+      <Link to={`/editbook/${book._id}`}
+        className="px-5 py-2 rounded-lg bg-yellow-500 hover:bg-yellow-600 text-white     font-semibold shadow-md transition cursor-pointer">
+       Edit Book
+      </Link>
+        <button
+        onClick={handleDelete}
+        className="px-5 py-2 rounded-lg bg-red-600 hover:bg-red-700 text-white font-semibold shadow-md transition cursor-pointer">
+        Delete Book
+        </button>
+        </div>
         </div>
       </div>
     </div>
